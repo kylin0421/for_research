@@ -13,7 +13,7 @@ from jailbreakbench.classifier import Llama3JailbreakJudge, Llama3RefusalJudge
 from load_jailbreakbench import load_jailbreakbench
 
 
-api_key = "tgp_v1_6ROfl1OZDRq916Y3NLl_Bo8jGxgPNpluVOA6HwJ53xM"
+api_key = ""
 jailbreak_judge = Llama3JailbreakJudge(api_key)
 refusal_judge = Llama3RefusalJudge(api_key)
 device=torch.device("cuda:5")
@@ -60,12 +60,12 @@ print(f"Model device: {next(model.parameters()).device}")
 layer_name=model.model.layers[16]
 
 
-method="JBC"
+method="PAIR"
 used_model_name="vicuna-13b-v1.5"
 
 prompts=load_jailbreakbench(method,used_model_name)
 
-num_prompt=79   #starting from the smallest index unprocessed prompt in the last run!
+num_prompt=17   #starting from the smallest index unprocessed prompt in the last run!
 success=0
 success_prompts=set()
 for prompt in prompts[num_prompt:]:

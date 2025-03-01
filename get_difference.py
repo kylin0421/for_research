@@ -1,7 +1,7 @@
 import json
 import torch
 
-method="GCG"
+method="PAIR"
 
 
 file1_name=f"{method}/act_success_{method}.json"

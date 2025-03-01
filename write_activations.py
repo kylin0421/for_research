@@ -7,6 +7,7 @@ import os
 os.environ["TF_ENABLE_ONEDNN_OPTS"] = "0"
 
 model_name = "lmsys/vicuna-7b-v1.5-16k"
+device="cuda:5"
 
 start_time = time.time()
 
@@ -15,15 +16,15 @@ tokenizer = AutoTokenizer.from_pretrained(model_name)
 model = AutoModelForCausalLM.from_pretrained(
     model_name,
     torch_dtype=torch.float16, 
-    device_map="auto",           
-)
+              
+).to(device)
 
 end_time = time.time()
 print(f"Model loaded in {end_time - start_time:.2f} seconds")
 
 
 
-method=""
+method="PAIR"
 feature="safe"
 with open(f"{method}/{feature}_{method}_vicuna7b.json", "r", encoding="utf-8") as file:
     prompts=json.load(file)
@@ -40,7 +41,7 @@ count=0
 start_time=time.time()
 for prompt in prompts:
     time_1=time.time()
-    activation=get_activation(model,layer_name,prompt,tokenizer,return_text=False)
+    activation=get_activation(model,layer_name,prompt,tokenizer,device=device,return_text=False)
     activations.append(activation.tolist())
     time_2=time.time()
     print(f"{count}th activation loaded, using {time_2-time_1:.2f} seconds")

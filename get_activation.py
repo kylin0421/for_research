@@ -38,7 +38,8 @@ def get_activation(model, layer_name, prompt, tokenizer,device,return_text:bool=
         outputs = model.generate(
         **inputs,
         do_sample=False,      
-        pad_token_id=tokenizer.eos_token_id
+        pad_token_id=tokenizer.eos_token_id,
+        max_length=16384
     )
     
     
